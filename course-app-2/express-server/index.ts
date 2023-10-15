@@ -16,4 +16,4 @@ app.use("/user", userRoutes);
 app.use("/admin", adminRoutes);
 
 
-mongoose.connect("mongodb+srv://RaunakA_:QTbajjyxdQEZMJDf@cluster0.ivcfy9f.mongodb.net/", { dbName: "Course_with_recoil" })
+mongoose.connect("Your-connection-string", { dbName: "Course_with_recoil" })
