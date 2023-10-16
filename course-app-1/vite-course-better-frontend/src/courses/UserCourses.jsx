@@ -18,7 +18,7 @@ async function fetchMyCourses( navigate) {
         console.log(error);
         const errMsg = error.response.data.message;
         alert(errMsg);
-        if (error.response.status = 403) {
+        if (error.response.status = 403) { 
             navigate("/user/login")
         }
     }
