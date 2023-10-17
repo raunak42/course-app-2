@@ -1,10 +1,12 @@
-import { Button, Card, TextField, Typography } from "@mui/material";
+import { Button, Card, FormControl, IconButton, TextField, Typography } from "@mui/material";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { personState } from "../store/atoms/general";
 import axios from "axios";
 import { nameState, passwordState } from "../store/selectors/general";
 import { signupInput } from "@raunaka_/types";
 import { useState } from "react";
+import { InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface functionProps {
     url: string
@@ -14,12 +16,15 @@ interface incomingData {
     password: string
 }
 function Signup(props: functionProps) {
+
     const setPerson = useSetRecoilState(personState);
     const name = useRecoilValue(nameState);
     const password = useRecoilValue(passwordState);
 
     const [red1, setRed1] = useState(false);
     const [red2, setRed2] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false)
 
     const text = "Signup";
 
@@ -29,9 +34,6 @@ function Signup(props: functionProps) {
 
         const parsedInput = signupInput.safeParse(incomingData);
         const isValid = parsedInput.success;
-
-        setRed1(!isValid && parsedInput.error.issues.some(issue => issue.path.includes("username")))
-        setRed2(!isValid && parsedInput.error.issues.some(issue => issue.path.includes("password")))
 
         if (isValid) {
             console.log("valid")
@@ -45,6 +47,10 @@ function Signup(props: functionProps) {
                 alert(error)
             }
         } else {
+            setRed1(parsedInput.error.issues.some(issue => issue.path.includes("username")))
+            setRed2(parsedInput.error.issues.some(issue => issue.path.includes("password")))
+
+
             const errors = [];
             let msg = "";
             for (let i = 0; i < parsedInput.error.errors.length; i++) {
@@ -73,14 +79,35 @@ function Signup(props: functionProps) {
                     }))
                 }}>
             </TextField>
-            <TextField type="" label="password" error={red2}
-                onChange={(event) => {
-                    setPerson((prevState) => ({
-                        ...prevState,
-                        password: event.target.value
-                    }))
-                }}>
-            </TextField>
+            <FormControl>
+                <TextField
+                    type={showPassword ? "text" : "password"} label="password" error={red2}
+                    onChange={(event) => {
+                        setPerson((prevState) => ({
+                            ...prevState,
+                            password: event.target.value
+                        }));
+                    }}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    edge="end"
+                                    onClick={() => {
+                                        setShowPassword(!showPassword)
+                                    }}>
+                                    {
+                                        (showPassword ? <Visibility /> : <VisibilityOff />)
+                                    }
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}  
+                >
+
+                </TextField>
+            </FormControl>
+
             <Button style={{ width: "25%", borderRadius: 20 }} variant="contained"
                 onClick={handleClick}>
                 {text}
