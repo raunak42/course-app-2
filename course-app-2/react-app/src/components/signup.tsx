@@ -9,10 +9,13 @@ import { useState } from "react";
 interface functionProps {
     url: string
 }
-
+interface incomingData {
+    username: string,
+    password: string
+}
 function Signup(props: functionProps) {
     const setPerson = useSetRecoilState(personState);
-    const username = useRecoilValue(nameState);
+    const name = useRecoilValue(nameState);
     const password = useRecoilValue(passwordState);
 
     const [red1, setRed1] = useState(false);
@@ -20,9 +23,11 @@ function Signup(props: functionProps) {
 
     const text = "Signup";
 
-
     const handleClick = async () => {
-        const parsedInput = signupInput.safeParse({ username, password });
+
+        const incomingData: incomingData = { username: name, password }
+
+        const parsedInput = signupInput.safeParse(incomingData);
         const isValid = parsedInput.success;
 
         setRed1(!isValid && parsedInput.error.issues.some(issue => issue.path.includes("username")))

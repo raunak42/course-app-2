@@ -1,10 +1,9 @@
 import Signup from "../components/signup";
 import { BASE_URL } from "../config";
 
-function AdminSignup() {
+function UserSignup() {
     return <div>
-        <Signup url={`${BASE_URL}/admin/signup`} />
+        <Signup url={`${BASE_URL}/user/signup`} />
     </div>
 }
-
-export default AdminSignup;
+export default UserSignup;
