@@ -5,6 +5,7 @@ import AdminSignup from './functions/admin/adminSignup'
 import UserSignup from './functions/user/userSignup'
 import AdminLogin from './functions/admin/adminLogin'
 import UserLogin from './functions/user/userLogin'
+import AddCourse from './functions/admin/addCourse'
 
 function App() {
   return <Router>
@@ -13,6 +14,7 @@ function App() {
       <Route path='/user/signup' element={<UserSignup />} />
       <Route path='/admin/login' element={<AdminLogin />} />
       <Route path='/user/login' element={<UserLogin />} />
+      <Route path='/admin/addCourse' element={<AddCourse />} />
     </Routes>
   </Router>
 }

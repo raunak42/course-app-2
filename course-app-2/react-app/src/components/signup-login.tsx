@@ -29,7 +29,7 @@ function SignupLogin(props: functionProps) {
 
     const handleClick = async () => {
 
-        const incomingData: incomingData = { username: name, password }
+        const incomingData: incomingData = { username: name, password } //more like outgoingData..?
 
         const parsedInput = signupInput.safeParse(incomingData);
         const isValid = parsedInput.success;
@@ -76,7 +76,6 @@ function SignupLogin(props: functionProps) {
             height: 250,
             width: 400,
             display: "flex", flexFlow: "column", justifyContent: "space-evenly",
-            marginTop: 120,
             borderRadius: 20,
             padding: 20
         }}>
