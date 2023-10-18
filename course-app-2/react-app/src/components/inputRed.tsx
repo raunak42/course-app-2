@@ -1,6 +1,6 @@
 import { Card, TextField, Typography, setRef } from "@mui/material";
 import { useState } from "react";
-import {  z } from "zod";
+import {  z } from "zod"; 
 
 const inputProps = z.object({
     input: z.string().min(3).max(10)
@@ -25,7 +25,7 @@ function InputRed() {
             <Typography variant="h4" textAlign={"center"}>Type here</Typography>
             <TextField
                 label={"username"}
-                onChange={(event) => {
+                onChange={(event) => { 
                     setInput(event.target.value);
                     ; const parsedInput = inputProps.safeParse({ input: event.target.value });
                     {
