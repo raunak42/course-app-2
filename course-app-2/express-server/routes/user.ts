@@ -4,7 +4,7 @@ import { signupInput } from "@raunaka_/types";
 import { User, Course } from "../db";
 import { SECRET, authenticateJwt } from "../middleware/auth";
 import mongoose from "mongoose";
-
+ 
 const router = express.Router()
 
 router.get("/me", authenticateJwt, async (req, res) => {

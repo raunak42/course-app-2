@@ -2,9 +2,9 @@ import { Button, Card, IconButton, TextField, Typography, Snackbar, Alert } from
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { personState } from "../store/atoms/general";
 import axios, { AxiosError } from "axios";
-import { nameState, passwordState } from "../store/selectors/general";
+import { usernameState, passwordState } from "../store/selectors/general";
 import { signupInput, usernameInput, passwordInput } from "@raunaka_/input-validation-for-course-app";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -16,27 +16,21 @@ interface incomingData {
     username: string,
     password: string
 }
+
 function SignupLogin(props: functionProps) {
-    const [msg, setMsg] = useState("")
-    const [showSnackbar, setShowSnackbar] = useState(false);
-    const [alertError, setAlertError] = useState(false)
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-
     const setPerson = useSetRecoilState(personState);
-    const name = useRecoilValue(nameState);
-    const password = useRecoilValue(passwordState);
-
-    const [showPassword, setShowPassword] = useState(false)
-
-    const incomingData: incomingData = { username: name, password } //more like outgoingData..?
+    const username: string = useRecoilValue(usernameState);
+    const password: string = useRecoilValue(passwordState);
+    const incomingData: incomingData = { username, password } //more like outgoingData..? this data is being sent to the backenf via axios
     const parsedInput = signupInput.safeParse(incomingData);
+    const parsedUsername = usernameInput.safeParse(username);
     const parsedPassword = passwordInput.safeParse(password);
-    const parsedUsername = usernameInput.safeParse(name);
 
-    useEffect(() => {
-        console.log(msg);
-    }, [msg]);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showSnackbar, setShowSnackbar] = useState(false);
+    const [alertError, setAlertError] = useState(false);
+    const [msg, setMsg] = useState("");
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const handleClick = async () => {
         setIsButtonDisabled(true)
@@ -46,6 +40,7 @@ function SignupLogin(props: functionProps) {
             setMsg("")
         }, 3000);
 
+
         if (parsedInput.success) {
             const username = parsedInput.data.username;
             const password = parsedInput.data.password;
@@ -53,7 +48,13 @@ function SignupLogin(props: functionProps) {
                 const res = await axios.post(props.url, { username, password });
                 const data = res.data;
                 setMsg(data.message);
-                console.log(msg, "1");
+                if (props.action === "Login") {
+                    if (!localStorage.token) {
+                        localStorage.setItem("token", data.token);
+                    } else {
+                        setMsg("Already logged in.");
+                    }
+                }
                 setShowSnackbar(true);
                 setAlertError(false)
             } catch (error) {
@@ -92,7 +93,7 @@ function SignupLogin(props: functionProps) {
                 onChange={(event) => {
                     setPerson((prevState) => ({
                         ...prevState,
-                        name: event.target.value
+                        username: event.target.value
                     }));
                 }}
                 error={!parsedUsername.success}>
@@ -114,7 +115,6 @@ function SignupLogin(props: functionProps) {
                     endAdornment: (
                         <InputAdornment position="end">
                             <IconButton
-                                edge="end"
                                 onClick={() => {
                                     setShowPassword(!showPassword)
                                 }}>
@@ -137,19 +137,19 @@ function SignupLogin(props: functionProps) {
                 horizontal: "left"
             }}>
             {
-                alertError === true ?
+                alertError ?
                     <Alert
-                        severity="error" style={{ whiteSpace: "pre-line" }}>
+                        variant="outlined"
+                        severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25 }}>
                         <div dangerouslySetInnerHTML={{ __html: msg }}></div>
                     </Alert>
-
                     :
-                    <Alert severity="success">
+                    <Alert
+                        variant="outlined"
+                        severity="success" style={{ borderRadius: 25 }}>
                         {msg}
                     </Alert>
-
             }
-
         </Snackbar>
     </div >
 };

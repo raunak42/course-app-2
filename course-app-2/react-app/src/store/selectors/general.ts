@@ -1,11 +1,11 @@
 import { selector } from "recoil";
 import { personState } from "../atoms/general";
 
-export const nameState = selector({
+export const usernameState = selector({
     key: "nameState",
     get: ({ get }) => {
         const state = get(personState);
-        return state.name;
+        return state.username;
     }
 });
 
