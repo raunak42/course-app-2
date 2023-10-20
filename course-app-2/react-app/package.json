@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
+    "@raunaka_/input-validation-for-course-app": "^1.0.1",
     "@raunaka_/types": "^1.0.0",
     "axios": "^1.5.1",
     "react": "^18.2.0",

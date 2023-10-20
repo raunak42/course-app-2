@@ -1,19 +1,18 @@
-import { Card, TextField, Typography, setRef } from "@mui/material";
+import { Card, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import {  z } from "zod"; 
+import { passwordInput } from "@raunaka_/input-validation-for-course-app";
 
-const inputProps = z.object({
-    input: z.string().min(3).max(10)
-})
+// const inputProps = z.object({
+//     username: z.string().min(1).max(21).refine((value) => !value.includes(" "), {
+//         message: 'Username cannot be empty or contain only spaces',
+//     })
+// });
 
 
 function InputRed() {
-
-    const [isRed, setIsRed] = useState(false);
     const [input, setInput] = useState("");
 
-
-
+    const parsedInput = passwordInput.safeParse(input);
 
     return <div style={{ display: "flex", justifyContent: "center" }}>
         <Card style={{
@@ -25,19 +24,10 @@ function InputRed() {
             <Typography variant="h4" textAlign={"center"}>Type here</Typography>
             <TextField
                 label={"username"}
-                onChange={(event) => { 
+                onChange={(event) => {
                     setInput(event.target.value);
-                    ; const parsedInput = inputProps.safeParse({ input: event.target.value });
-                    {
-                        if (parsedInput.success) {
-                            setIsRed(false);
-                        } else {
-                            setIsRed(true)
-                        }
-                    }
                 }}
-
-                error={isRed}>
+                error={!parsedInput.success}>
             </TextField>
         </Card>
     </div>

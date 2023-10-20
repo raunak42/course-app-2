@@ -19,7 +19,8 @@ function AddEditCourse(props: propsCourse) {
             headers: {
                 authorization: `Bearer ${token}`
             }
-        })
+        });
+        if(res){}
     }
 
     return <div style={{ display: "flex", justifyContent: "center" }}>
