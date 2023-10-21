@@ -74,7 +74,7 @@ function AddEditCourse(props: propsCourse) {
             }
             if (data.error) {
                 setAlertError(true)
-                console.log(data.error.issues)
+                setMsg(data.error)
                 setTimeout(() => {
                     // navigate("/admin/login")
                     setShowSnackbar(false)
