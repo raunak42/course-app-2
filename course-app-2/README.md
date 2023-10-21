@@ -1,3 +1,5 @@
+## Course App 2
+
 As of now, there are four sub-folders in this directory.
 1. common - not in use right now.
 2. node modules - not in use yet, because express-server and react-app both have their own package.json and node modules.
