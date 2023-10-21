@@ -7,6 +7,7 @@ import AdminLogin from './functions/admin/adminLogin'
 import UserLogin from './functions/user/userLogin'
 import AddCourse from './functions/admin/addCourse'
 import InputRed from './components/inputRed'
+import EditCourse from './functions/admin/editCourse'
 
 function App() {
   return <Router>
@@ -16,6 +17,7 @@ function App() {
       <Route path='/admin/login' element={<AdminLogin />} />
       <Route path='/user/login' element={<UserLogin />} />
       <Route path='/admin/addCourse' element={<AddCourse />} />
+      <Route path='/admin/editCourse/:courseId' element={<EditCourse />} />
       <Route path='/red' element={<InputRed />} />
     </Routes>
   </Router>

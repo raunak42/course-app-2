@@ -6,4 +6,4 @@ function AddCourse() {
         <AddEditCourse action={"Add"} reqType={"post"} url={`${BASE_URL}/admin/addCourse`} />
     </div>
 }
-export default AddCourse;
+export default AddCourse; 

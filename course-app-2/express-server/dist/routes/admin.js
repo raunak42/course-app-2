@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const types_1 = require("@raunaka_/types");
+// import { courseInput, signupInput } from "@raunaka_/types";
+const input_validation_for_course_app_1 = require("@raunaka_/input-validation-for-course-app");
 const db_1 = require("../db");
 const auth_1 = require("../middleware/auth");
 const router = express_1.default.Router();
@@ -31,7 +32,7 @@ router.get("/me", auth_1.authenticateJwt, (req, res) => __awaiter(void 0, void 0
     }
 }));
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parsedInput = types_1.signupInput.safeParse(req.body);
+    const parsedInput = input_validation_for_course_app_1.signupInput.safeParse(req.body);
     if (parsedInput.success) {
         const { username, password } = parsedInput.data;
         const admin = yield db_1.Admin.findOne({ username });
@@ -49,7 +50,7 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parsedInput = types_1.signupInput.safeParse(req.body);
+    const parsedInput = input_validation_for_course_app_1.signupInput.safeParse(req.body);
     if (parsedInput.success) {
         const { username, password } = parsedInput.data;
         const admin = yield db_1.Admin.findOne({ username, password });
@@ -100,7 +101,7 @@ router.post("/addCourse", auth_1.authenticateJwt, (req, res) => __awaiter(void 0
     const adminId = req.headers["id"];
     const admin = yield db_1.Admin.findById({ _id: adminId });
     if (admin) {
-        const parsedCourseInput = types_1.courseInput.safeParse(req.body);
+        const parsedCourseInput = input_validation_for_course_app_1.courseDetailsInput.safeParse(req.body);
         if (parsedCourseInput.success) {
             parsedCourseInput.data.published = true;
             const course = new db_1.Course(parsedCourseInput.data);
@@ -126,7 +127,7 @@ router.put("/course/:id", auth_1.authenticateJwt, (req, res) => __awaiter(void 0
     try {
         if (admin) {
             const courseId = req.params.id;
-            const parsedUpdateCourseInput = types_1.courseInput.safeParse(req.body);
+            const parsedUpdateCourseInput = input_validation_for_course_app_1.courseDetailsInput.safeParse(req.body);
             if (parsedUpdateCourseInput.success) {
                 const updatedCourse = parsedUpdateCourseInput.data;
                 const course = yield db_1.Course.findByIdAndUpdate(courseId, updatedCourse, { new: true });

@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const types_1 = require("@raunaka_/types");
+const input_validation_for_course_app_1 = require("@raunaka_/input-validation-for-course-app");
 const db_1 = require("../db");
 const auth_1 = require("../middleware/auth");
 const mongoose_1 = __importDefault(require("mongoose"));
@@ -32,7 +32,7 @@ router.get("/me", auth_1.authenticateJwt, (req, res) => __awaiter(void 0, void 0
     }
 }));
 router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let parsedInput = types_1.signupInput.safeParse(req.body);
+    let parsedInput = input_validation_for_course_app_1.signupInput.safeParse(req.body);
     if (!parsedInput.success) {
         res.status(411).json({
             error: parsedInput.error
@@ -52,7 +52,7 @@ router.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 router.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const parsedInput = types_1.signupInput.safeParse(req.body);
+    const parsedInput = input_validation_for_course_app_1.signupInput.safeParse(req.body);
     if (parsedInput.success) {
         const { username, password } = parsedInput.data;
         const user = yield db_1.User.findOne({ username, password });

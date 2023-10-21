@@ -8,7 +8,7 @@ export function authenticateJwt(req: Request, res: Response, next: NextFunction)
         const token = authHeader.split(" ")[1];
         jwt.verify(token, SECRET, (err, payload) => {
             if (err) {
-                return res.send(err.message + ` hi`).status(403)
+                return res.json({ error: "Session expired." }).sendStatus(403)
             }
             if (!payload) {
                 return res.sendStatus(403);

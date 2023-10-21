@@ -11,13 +11,14 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 interface functionProps {
     url: string,
     action: string
-}
+} 
 interface incomingData {
     username: string,
     password: string
 }
 
 function SignupLogin(props: functionProps) {
+    
     const setPerson = useSetRecoilState(personState);
     const username: string = useRecoilValue(usernameState);
     const password: string = useRecoilValue(passwordState);

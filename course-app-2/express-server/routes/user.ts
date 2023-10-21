@@ -1,10 +1,10 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { signupInput } from "@raunaka_/types";
+import { signupInput } from "@raunaka_/input-validation-for-course-app"
 import { User, Course } from "../db";
 import { SECRET, authenticateJwt } from "../middleware/auth";
 import mongoose from "mongoose";
- 
+
 const router = express.Router()
 
 router.get("/me", authenticateJwt, async (req, res) => {
@@ -111,4 +111,4 @@ router.get("/myCourses", authenticateJwt, async (req, res) => {
     }
 })
 
-export default router;
+export default router;"@raunaka_/types";

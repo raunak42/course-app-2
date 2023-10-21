@@ -1,6 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { courseInput, signupInput } from "@raunaka_/types";
+// import { courseInput, signupInput } from "@raunaka_/types";
+import { signupInput, courseDetailsInput } from "@raunaka_/input-validation-for-course-app";
 import { Admin, Course } from "../db";
 import { SECRET, authenticateJwt } from "../middleware/auth";
 const router = express.Router()
@@ -85,7 +86,7 @@ router.post("/addCourse", authenticateJwt, async (req, res) => {
     const adminId = req.headers["id"];
     const admin = await Admin.findById({ _id: adminId });
     if (admin) {
-        const parsedCourseInput = courseInput.safeParse(req.body);
+        const parsedCourseInput = courseDetailsInput.safeParse(req.body);
 
         if (parsedCourseInput.success) {
             parsedCourseInput.data.published = true;
@@ -113,7 +114,7 @@ router.put("/course/:id", authenticateJwt, async (req, res) => {
     try {
         if (admin) {
             const courseId = req.params.id;
-            const parsedUpdateCourseInput = courseInput.safeParse(req.body);
+            const parsedUpdateCourseInput = courseDetailsInput.safeParse(req.body);
             if (parsedUpdateCourseInput.success) {
                 const updatedCourse = parsedUpdateCourseInput.data;
                 const course = await Course.findByIdAndUpdate(courseId, updatedCourse, { new: true });
