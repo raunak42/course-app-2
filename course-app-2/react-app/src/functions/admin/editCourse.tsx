@@ -46,7 +46,7 @@ function EditCourse() {
             }
         };
         fetchData();
-    }, [res, courseId]);
+    }, [res, courses, setCourses, courseId]);
 
 
     if (courses.length > 0 && course._id !== "") {

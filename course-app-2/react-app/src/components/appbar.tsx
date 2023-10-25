@@ -15,22 +15,22 @@ function Appbar() {
                 {
                     (
                         window.location.pathname === "/user/login" ||
-                        window.location.pathname === "/admin/login"||
+                        window.location.pathname === "/admin/login" ||
                         window.location.pathname === "/"
                     ) ?
                         <Button variant={"contained"} style={{ backgroundColor: "#64b5f6", height: "70%", borderRadius: 25 }}
                             onClick={() => {
                                 if (window.location.pathname === "/admin/login") {
                                     navigate("admin/signup")
-                                }else{
-                                    navigate("/user/signup")                                
+                                } else {
+                                    navigate("/user/signup")
                                 }
                             }}>
                             SignUp
                         </Button>
                         :
                         null
-                }   
+                }
                 {
                     (
                         window.location.pathname !== "/admin/myCourses" &&
@@ -68,10 +68,10 @@ function Appbar() {
                     )
                         ?
                         <Button onClick={() => {
+                            navigate("/");
                             localStorage.clear();
                             setShowSnackbar(true);
                             setTimeout(() => {
-                                navigate("/");
                                 setShowSnackbar(false)
                             }, 3000);
                         }} variant={"contained"} style={{ backgroundColor: "#64b5f6", height: "70%", borderRadius: 25 }}>
@@ -85,8 +85,8 @@ function Appbar() {
         <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "left" }}
             open={showSnackbar}>
-            <Alert severity="success" style={{ backgroundColor: "greenyellow", borderRadius:25 }}>
-            You've been logged out
+            <Alert severity="success" style={{ backgroundColor: "greenyellow", borderRadius: 25 }}>
+                You've been logged out
             </Alert>
 
         </Snackbar>
