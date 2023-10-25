@@ -11,7 +11,21 @@ function Appbar() {
                 <img src="https://i.redd.it/fhs2f867erpb1.png" style={{ maxHeight: "55px" }} />
                 <Typography variant="h3">Coursera</Typography>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-evenly", width: "20%", marginTop: 10 }}>
+            <div style={{ display: "flex", justifyContent: "space-evenly", width: "30%", marginTop: 10 }}>
+            {
+                    (
+                        window.location.pathname === "/admin/courses" ||
+                        window.location.pathname === "/admin/myCourses" 
+                    ) ?
+                        <Button variant={"contained"} style={{ backgroundColor: "#64b5f6", height: "70%", borderRadius: 25 }}
+                            onClick={() => {
+                                navigate("/admin/addCourse")
+                            }}>
+                            Add course
+                        </Button>
+                        :
+                        null
+                }
                 {
                     (
                         window.location.pathname === "/user/login" ||

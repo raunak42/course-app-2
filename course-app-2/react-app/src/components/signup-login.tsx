@@ -167,8 +167,7 @@ function SignupLogin(props: functionProps) {
             {
                 alertError ?
                     <Alert
-                        variant="outlined"
-                        severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25 }}>
+                        severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25, backgroundColor:"#ffcdd2" }}>
                         <div dangerouslySetInnerHTML={{ __html: msg }}></div>
                     </Alert>
                     :
