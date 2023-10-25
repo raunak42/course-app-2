@@ -156,13 +156,18 @@ router.put("/course/:id", auth_1.authenticateJwt, (req, res) => __awaiter(void 0
 router.delete("/course/:id", auth_1.authenticateJwt, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const adminId = req.headers["id"];
     const admin = yield db_1.Admin.findById(adminId);
-    if (admin) {
-        const courseId = req.params.id;
-        yield db_1.Course.findByIdAndDelete(courseId);
-        return res.json({ message: "Course deleted successfully" });
+    try {
+        if (admin) {
+            const courseId = req.params.id;
+            yield db_1.Course.findByIdAndDelete(courseId);
+            return res.json({ message: "Course deleted successfully" });
+        }
+        else {
+            return res.status(403).json({ message: "Recheck the adminId" });
+        }
     }
-    else {
-        return res.status(403).json({ message: "Recheck the adminId" });
+    catch (error) {
+        return res.json(error);
     }
 }));
 exports.default = router;

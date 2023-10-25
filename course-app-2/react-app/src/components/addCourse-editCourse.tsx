@@ -5,7 +5,8 @@ import { courseDetailsInput } from "@raunaka_/input-validation-for-course-app";
 import axios from "axios";
 import { IdescriptionState, /*IidState,*/ IimageLinkState, IpriceState, ItitleState } from "../store/selectors/incomingCourse";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../config";
 
 export interface propsCourse {
     action: string,
@@ -14,6 +15,9 @@ export interface propsCourse {
 }
 
 function AddEditCourse(props: propsCourse) {
+    const token = localStorage.getItem("token")
+
+    const { courseId } = useParams();
     const navigate = useNavigate();
 
     const [course, setCourse] = useRecoilState(outgoingCourseState);
@@ -23,13 +27,11 @@ function AddEditCourse(props: propsCourse) {
     const Idescription = useRecoilValue(IdescriptionState);
     const IimageLink = useRecoilValue(IimageLinkState);
     const Iprice = useRecoilValue(IpriceState);
-    // // const id = useRecoilValue(IidState);
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("");
     const [imageLink, setImageLink] = useState("");
     const [price, setPrice] = useState<any>("");
-    // // const [id, setId] = useState(Iid);
 
     const [msg, setMsg] = useState("")
     const [alertError, setAlertError] = useState(false)
@@ -57,7 +59,6 @@ function AddEditCourse(props: propsCourse) {
         setMsg("")
         if (parsedCourse.success) {
             const outgoingCourse = parsedCourse.data;
-            const token = localStorage.getItem("token")
             const res = await axios[reqType](props.url, outgoingCourse, {
                 headers: {
                     authorization: `Bearer ${token}`
@@ -145,21 +146,46 @@ function AddEditCourse(props: propsCourse) {
                     }))
 
                 }} />
-            <Button variant="contained"
-                style={{ width: "25%", borderRadius: 20 }}
-                onClick={handleClick}>Save</Button>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button variant="contained"
+                    style={{ width: "25%", borderRadius: 20 }}
+                    onClick={handleClick}>Save
+                </Button>
+                {
+                    props.action === "Edit" ?
+                        <Button style={{ backgroundColor: "#f44336", color: "#ffebee", borderRadius: 25, width: "25%" }}
+                            onClick={async () => {
+                                const res = await axios.delete(`${BASE_URL}/admin/course/${courseId}`, {
+                                    headers: {
+                                        authorization: `Bearer ${token}`
+                                    }
+                                });
+                                setMsg(res.data.message);
+                                setShowSnackbar(true);
+                                setTimeout(() => {
+                                    setShowSnackbar(false)
+                                    navigate("/admin/courses")
+                                }, 3000);
+                            }}>
+                            Delete
+                        </Button>
+                        :
+                        null
+                }
+            </div>
+
         </Card>
         <Snackbar
-            style={{marginTop:50}}
+            style={{ marginTop: 50 }}
             open={showSnackbar}
             anchorOrigin={{ vertical: "top", horizontal: "left" }}>
             {
                 alertError ?
-                    <Alert variant="standard" severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25, backgroundColor:"#ffcdd2" }}>
+                    <Alert variant="standard" severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25, backgroundColor: "#ffcdd2" }}>
                         <div dangerouslySetInnerHTML={{ __html: msg }} ></div>
                     </Alert>
                     :
-                    <Alert variant="standard" style={{ borderRadius: 25, backgroundColor:"greenyellow" }} severity="success">
+                    <Alert variant="standard" style={{ borderRadius: 25, backgroundColor: "greenyellow" }} severity="success">
                         {msg}
                     </Alert>
             }

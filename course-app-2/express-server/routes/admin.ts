@@ -35,7 +35,7 @@ router.post("/signup", async (req, res) => {
     }
 })
 
-router.post("/login", async (req, res) => { 
+router.post("/login", async (req, res) => {
     const parsedInput = signupInput.safeParse(req.body);
     if (parsedInput.success) {
         const { username, password } = parsedInput.data;
@@ -141,13 +141,19 @@ router.put("/course/:id", authenticateJwt, async (req, res) => {
 router.delete("/course/:id", authenticateJwt, async (req, res) => {
     const adminId = req.headers["id"];
     const admin = await Admin.findById(adminId);
-    if (admin) {
-        const courseId = req.params.id;
-        await Course.findByIdAndDelete(courseId);
-        return res.json({ message: "Course deleted successfully" });
-    } else {
-        return res.status(403).json({ message: "Recheck the adminId" });
+    try {
+        if (admin) {
+            const courseId = req.params.id;
+            await Course.findByIdAndDelete(courseId);
+            return res.json({ message: "Course deleted successfully" });
+        } else {
+            return res.status(403).json({ message: "Recheck the adminId" });
+        }
+    } catch (error) {
+        return res.json(error)
+
     }
+
 });
 
 
