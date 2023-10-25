@@ -8,7 +8,7 @@ export function authenticateJwt(req: Request, res: Response, next: NextFunction)
         const token = authHeader.split(" ")[1];
         jwt.verify(token, SECRET, (err, payload) => {
             if (err) {
-                return res.json({ error: "Session expired." }).sendStatus(403)
+                return res.json({ error: err }).sendStatus(403)
             }
             if (!payload) {
                 return res.sendStatus(403);
@@ -21,7 +21,8 @@ export function authenticateJwt(req: Request, res: Response, next: NextFunction)
             return next();
         });
     } else {
-        return res.sendStatus(401)
+        console.log("no header")
+        return res.sendStatus(403)
     }
     return;
 }

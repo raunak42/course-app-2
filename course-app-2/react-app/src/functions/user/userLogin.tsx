@@ -3,7 +3,7 @@ import { BASE_URL } from "../../config";
 
 function UserLogin() {
     return <div style={{ marginTop: 120 }}>
-        <Login url={`${BASE_URL}/user/login`} action={"Login"} />
+        <Login url={`${BASE_URL}/user/login`} action={"Login"} role="user" />
     </div>
 }
 export default UserLogin;

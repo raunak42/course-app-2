@@ -120,6 +120,7 @@ router.get("/myCourses", auth_1.authenticateJwt, (req, res) => __awaiter(void 0,
     const user = yield db_1.User.findById({ _id: userId });
     if (user) {
         const myCourses = user.purchasedCourses;
+        console.log(myCourses);
         return res.json({ myCourses });
     }
     else {
@@ -127,3 +128,4 @@ router.get("/myCourses", auth_1.authenticateJwt, (req, res) => __awaiter(void 0,
     }
 }));
 exports.default = router;
+"@raunaka_/types";

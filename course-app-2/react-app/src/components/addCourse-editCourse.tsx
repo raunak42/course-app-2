@@ -7,7 +7,7 @@ import { IdescriptionState, /*IidState,*/ IimageLinkState, IpriceState, ItitleSt
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface propsCourse {
+export interface propsCourse {
     action: string,
     reqType: "post" | "put" | "get" | "delete",
     url: string
@@ -150,15 +150,16 @@ function AddEditCourse(props: propsCourse) {
                 onClick={handleClick}>Save</Button>
         </Card>
         <Snackbar
+            style={{marginTop:50}}
             open={showSnackbar}
             anchorOrigin={{ vertical: "top", horizontal: "left" }}>
             {
                 alertError ?
-                    <Alert variant="outlined" severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25 }}>
+                    <Alert variant="standard" severity="error" style={{ whiteSpace: "pre-line", borderRadius: 25, backgroundColor:"#ffcdd2" }}>
                         <div dangerouslySetInnerHTML={{ __html: msg }} ></div>
                     </Alert>
                     :
-                    <Alert variant="outlined" style={{ borderRadius: 25 }} severity="success">
+                    <Alert variant="standard" style={{ borderRadius: 25, backgroundColor:"greenyellow" }} severity="success">
                         {msg}
                     </Alert>
             }

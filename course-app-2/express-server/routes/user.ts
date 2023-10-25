@@ -40,7 +40,7 @@ router.post("/signup", async (req, res) => {
     }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login" ,async (req, res) => { 
     const parsedInput = signupInput.safeParse(req.body);
     if (parsedInput.success) {
         const { username, password } = parsedInput.data;
@@ -105,6 +105,7 @@ router.get("/myCourses", authenticateJwt, async (req, res) => {
     const user = await User.findById({ _id: userId });
     if (user) {
         const myCourses = user.purchasedCourses;
+        console.log(myCourses)
         return res.json({ myCourses });
     } else {
         return res.status(403).json({ message: "Recheck the userId" });

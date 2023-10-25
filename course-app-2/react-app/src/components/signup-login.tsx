@@ -1,5 +1,5 @@
 import { Button, Card, IconButton, TextField, Typography, Snackbar, Alert } from "@mui/material";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { constSelector, useRecoilValue, useSetRecoilState } from "recoil";
 import { personState } from "../store/atoms/general";
 import axios, { AxiosError } from "axios";
 import { usernameState, passwordState } from "../store/selectors/general";
@@ -7,18 +7,23 @@ import { signupInput, usernameInput, passwordInput } from "@raunaka_/input-valid
 import { useState } from "react";
 import { InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import jwt from "jsonwebtoken";
+import { useNavigate } from "react-router-dom";
+import { set } from "mongoose";
 
 interface functionProps {
     url: string,
-    action: string
-} 
+    action: string,
+    role: string
+}
 interface incomingData {
     username: string,
     password: string
 }
 
 function SignupLogin(props: functionProps) {
-    
+    const navigate = useNavigate();
+
     const setPerson = useSetRecoilState(personState);
     const username: string = useRecoilValue(usernameState);
     const password: string = useRecoilValue(passwordState);
@@ -48,14 +53,36 @@ function SignupLogin(props: functionProps) {
             try {
                 const res = await axios.post(props.url, { username, password });
                 const data = res.data;
-                setMsg(data.message);
-                if (props.action === "Login") {
-                    if (!localStorage.token) {
-                        localStorage.setItem("token", data.token);
-                    } else {
-                        setMsg("Already logged in.");
+                setMsg(data.message)
+                if (props.role === "user") {
+                    if (props.action === "Login") {
+                        localStorage.setItem("token", data.token)
+                        console.log(data)
+                        setTimeout(() => {
+                            navigate("/user/courses")
+                        }, 3000);
+                    }
+                    if (props.action === "Signup") {
+                        setTimeout(() => {
+                            navigate("/")
+                        }, 3000);
                     }
                 }
+                if (props.role === "admin") {
+                    if (props.action === "Login") {
+                        localStorage.setItem("token", data.token)
+                        console.log(data)
+                        setTimeout(() => {
+                            navigate("/admin/courses")
+                        }, 3000);
+                    }
+                    if (props.action === "Signup") {
+                        setTimeout(() => {
+                            navigate("/admin/login")
+                        }, 3000);
+                    }
+                }
+
                 setShowSnackbar(true);
                 setAlertError(false)
             } catch (error) {
@@ -131,7 +158,7 @@ function SignupLogin(props: functionProps) {
                 {props.action}
             </Button>
         </Card>
-        <Snackbar
+        <Snackbar style={{ marginTop: 50 }}
             open={showSnackbar}
             anchorOrigin={{
                 vertical: "top",
@@ -146,8 +173,7 @@ function SignupLogin(props: functionProps) {
                     </Alert>
                     :
                     <Alert
-                        variant="outlined"
-                        severity="success" style={{ borderRadius: 25 }}>
+                        severity="success" style={{ borderRadius: 25, backgroundColor: "greenyellow" }}>
                         {msg}
                     </Alert>
             }
