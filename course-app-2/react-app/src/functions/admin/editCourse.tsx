@@ -23,15 +23,14 @@ function EditCourse() {
     const token = localStorage.getItem("token");
     const { courseId } = useParams();
     const [res, setRes] = useState<any>();
-    const [courses, setCourses] = useState<course[] | []>([])
 
     useEffect(() => {   //always use useEffect independantly within the main function
 
         async function fetchData() {
             const res = await axios.get(`${BASE_URL}/admin/courses`, { headers: { authorization: `Bearer ${token}` } });
             setRes(res);
-            setCourses(res.data.courses);
-            const thisCourse = courses.find(t => t._id === courseId);
+            const incomingCourses: course[] = res.data.courses;
+            const thisCourse = incomingCourses.find(t => t._id === courseId);
             if (thisCourse !== undefined) {
                 setCourse(thisCourse)
             } else {
@@ -46,10 +45,10 @@ function EditCourse() {
             }
         };
         fetchData();
-    }, [res, courses, setCourses, courseId]);
+    }, []);
 
 
-    if (courses.length > 0 && course._id !== "") {
+    if (res && course._id !== "") {
         return <div style={{ marginTop: 120 }}>
             <AddEditCourse action="Edit" reqType="put" url={`${BASE_URL}/admin/course/${courseId}`}></AddEditCourse>
         </div>

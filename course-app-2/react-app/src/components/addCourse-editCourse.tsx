@@ -28,20 +28,16 @@ function AddEditCourse(props: propsCourse) {
     const IimageLink = useRecoilValue(IimageLinkState);
     const Iprice = useRecoilValue(IpriceState);
 
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("");
-    const [imageLink, setImageLink] = useState("");
-    const [price, setPrice] = useState<any>("");
+    const [title, setTitle] = useState(Ititle)
+    const [description, setDescription] = useState(Idescription);
+    const [imageLink, setImageLink] = useState(IimageLink);
+    const [price, setPrice] = useState<any>(Iprice);
 
     const [msg, setMsg] = useState("")
     const [alertError, setAlertError] = useState(false)
     const [showSnackbar, setShowSnackbar] = useState(false)
 
     useEffect(() => {
-        setTitle(Ititle);
-        setDescription(Idescription);
-        setImageLink(IimageLink);
-        setPrice(Iprice);
         setCourse((prevState) => ({
             ...prevState,
             title: Ititle,
@@ -49,7 +45,7 @@ function AddEditCourse(props: propsCourse) {
             imageLink: IimageLink,
             price: Iprice,
         }))
-    }, [Ititle, Idescription, IimageLink, Iprice])
+    }, [Ititle, Idescription, IimageLink, Iprice, setTitle, setDescription, setPrice, setImageLink])
 
     const reqType = props.reqType;
 
