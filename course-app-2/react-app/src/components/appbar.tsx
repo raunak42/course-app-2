@@ -12,10 +12,10 @@ function Appbar() {
                 <Typography variant="h3">Coursera</Typography>
             </div>
             <div style={{ display: "flex", justifyContent: "space-evenly", width: "30%", marginTop: 10 }}>
-            {
+                {
                     (
                         window.location.pathname === "/admin/courses" ||
-                        window.location.pathname === "/admin/myCourses" 
+                        window.location.pathname === "/admin/myCourses"
                     ) ?
                         <Button variant={"contained"} style={{ backgroundColor: "#64b5f6", height: "70%", borderRadius: 25 }}
                             onClick={() => {
@@ -58,7 +58,10 @@ function Appbar() {
                         ?
                         <Button
                             onClick={() => {
-                                if (window.location.pathname === "/admin/courses") {
+                                if (
+                                    window.location.pathname === "/admin/courses" ||
+                                    window.location.pathname === "/admin/addCourse"
+                                ) {
                                     navigate("/admin/myCourses")
                                 }
                                 if (window.location.pathname === "/user/courses") {
