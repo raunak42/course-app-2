@@ -1,5 +1,5 @@
 import Login from "../../components/signup-login";
-import { BASE_URL } from "../../config";
+import { BASE_URL } from "../../config.js";
 
 function AdminLogin() {
     return <div style={{marginTop:120}}>
