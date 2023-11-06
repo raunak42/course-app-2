@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
 import userRoutes from "./routes/user"
-import adminRoutes from "./routes/admin"
+import adminRoutes from "./routes/admin" 
 import path from "path"
 
 const app = express();
