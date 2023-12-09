@@ -26,4 +26,4 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan ec2-13-48-130-47.eu-north-1.compute.amazonaws.com >> known_hosts
           cp known_hosts ~/.ssh/known_hosts 
-          ssh -t -i keyfile ubuntu@ec2-13-48-130-47.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+          ssh -t -i keyfile ubuntu@ec2-16-170-234-137.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
