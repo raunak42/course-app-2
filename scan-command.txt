@@ -1,0 +1,1 @@
+ssh-keyscan ec2-16-171-175-49.eu-north-1.compute.amazonaws.com >> known_hosts
