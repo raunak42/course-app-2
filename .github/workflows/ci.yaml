@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         #the uses: actions/checkout@v2 step is used to check out the code from your repository,
         #which makes this repository's contents available to the runner(github's ubuntu machine) for the duration of the workflow run.
-        #This allows you to work with files and scripts that are part of your repository in your workflow.
+        #This allows you to work with files and scripts that are part of your repository in your workflow.z
 
       - name: SSH and deploy
         env:
